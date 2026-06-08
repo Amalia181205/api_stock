@@ -47,6 +47,17 @@ $query = mysqli_query(
 );
 
 if ($query) {
+
+    //  HISTORY EDIT
+    mysqli_query($koneksi,
+        "INSERT INTO tb_history (product_name, action, description)
+         VALUES (
+            '$nama_produk',
+            'Update Produk',
+            'Stok: $stok | Shopee: $shopee_stock | Tokopedia: $tokopedia_stock'
+         )"
+         );
+
     echo json_encode([
         "success" => true,
         "message" => "Produk berhasil diubah"

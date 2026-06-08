@@ -32,6 +32,17 @@ $query = mysqli_query($koneksi,
      VALUES ('$nama_produk', '$stok', '$harga', '$shopee_stock', '$tokopedia_stock')"
 );
 
+if ($query) {
+    mysqli_query($koneksi,
+        "INSERT INTO tb_history (product_name, action, description)
+         VALUES (
+            '$nama_produk',
+            'Tambah Produk',
+            'Stok: $stok | Shopee: $shopee_stock | Tokopedia: $tokopedia_stock'
+         )"
+    );
+}
+
 echo json_encode([
     "success" => $query,
     "message" => $query ? "Produk berhasil ditambahkan" : mysqli_error($koneksi)

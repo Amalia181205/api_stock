@@ -1,29 +1,32 @@
 <?php
 
-header('Content-Type: application/json'); // Menentukan format response sebagai JSON(errorny disini ngbcany html)
+header('Content-Type: application/json');
 
 $koneksi = new mysqli('localhost', 'root', '', 'db_stock');
 
-if (!isset($_POST['id'])) {
-    echo json_encode([
-        "success" => false,
-        "message" => "ID tidak terkirim"
-    ]);
-    exit;
-}
+$id = $_POST['id'];
 
-$id = mysqli_real_escape_string($koneksi, $_POST['id']);
+// ambil nama produk dulu
+$get = mysqli_query($koneksi, "SELECT nama_produk FROM tb_stock WHERE id='$id'");
+$row = mysqli_fetch_assoc($get);
+$nama = $row['nama_produk'];
 
-$data = mysqli_query(
-    $koneksi,
+$query = mysqli_query($koneksi,
     "DELETE FROM tb_stock WHERE id='$id'"
 );
 
-if ($data) {
+if ($query) {
+
+    mysqli_query($koneksi,
+        "INSERT INTO tb_history (product_name, action, description)
+         VALUES ('$nama', 'DELETE', 'Produk dihapus')"
+    );
+
     echo json_encode([
         "success" => true,
         "message" => "Produk berhasil dihapus"
     ]);
+
 } else {
     echo json_encode([
         "success" => false,
