@@ -31,13 +31,18 @@ $nama_produk = mysqli_real_escape_string($koneksi, $_POST['nama_produk']);
 $stok = mysqli_real_escape_string($koneksi, $_POST['stok']);
 $harga = mysqli_real_escape_string($koneksi, $_POST['harga']);
 
+$shopee_stock = mysqli_real_escape_string($koneksi, $_POST['shopee_stock']);
+$tokopedia_stock = mysqli_real_escape_string($koneksi, $_POST['tokopedia_stock']);
+
 $query = mysqli_query(
     $koneksi,
     "UPDATE tb_stock
      SET
         nama_produk='$nama_produk',
         stok='$stok',
-        harga='$harga'
+        harga='$harga',
+        shopee_stock='$shopee_stock',
+        tokopedia_stock='$tokopedia_stock'
      WHERE id='$id'"
 );
 

@@ -24,10 +24,12 @@ if (!isset($_POST['nama_produk']) || !isset($_POST['stok']) || !isset($_POST['ha
 $nama_produk = $_POST['nama_produk'];
 $stok = $_POST['stok'];
 $harga = $_POST['harga'];
+$shopee_stock = $_POST['shopee_stock'] ?? 0;
+$tokopedia_stock = $_POST['tokopedia_stock'] ?? 0;
 
 $query = mysqli_query($koneksi,
-    "INSERT INTO tb_stock (nama_produk, stok, harga)
-     VALUES ('$nama_produk', '$stok', '$harga')"
+    "INSERT INTO tb_stock (nama_produk, stok, harga, shopee_stock, tokopedia_stock)
+     VALUES ('$nama_produk', '$stok', '$harga', '$shopee_stock', '$tokopedia_stock')"
 );
 
 echo json_encode([
