@@ -45,22 +45,22 @@ function getFcmAccessToken()
         CURLOPT_SSL_VERIFYPEER => false // TAMBAHAN AGAR TIDAK DIBLOKIR OLEH SSL XAMPP
     ]);
 
-    // $result = json_decode(curl_exec($ch), true);
-    // curl_close($ch);
-
-    // return $result["access_token"] ?? null;
-
     $result = curl_exec($ch);
 
     if ($result === false) {
+        curl_close($ch);
         return null;
     }
 
     $result = json_decode($result, true);
 
+    curl_close($ch);
+
     if (!isset($result["access_token"])) {
         return null;
     }
+
+    return $result["access_token"];
 }
 
 /**
